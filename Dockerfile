@@ -15,7 +15,7 @@ RUN touch /root/.ssh/id_rsa.pub
 
 RUN apt-get install -y git make software-properties-common
 RUN git clone --branch $DOKKU_VERSION https://github.com/progrium/dokku.git /root/dokku
-RUN cd /root/dokku && make install
+RUN cd /root/dokku && CI=1 make install
 
 RUN mkdir /var/run/sshd
 

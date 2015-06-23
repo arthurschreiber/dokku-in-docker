@@ -9,6 +9,8 @@ RUN apt-get -y install \
   openssh-server
 
 # Empty ssh key file, so dokku does not complain on installation
+RUN mkdir /root/.ssh
+RUN chown 600 /root/.ssh
 RUN touch /root/.ssh/id_rsa.pub
 
 RUN apt-get install -y git make software-properties-common

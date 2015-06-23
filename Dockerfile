@@ -8,11 +8,6 @@ RUN apt-get -y install \
   zip gcc python-software-properties curl git make ruby dnsutils \
   openssh-server
 
-RUN curl -sSL https://get.docker.com/gpg | apt-key add -
-RUN echo deb http://get.docker.io/ubuntu docker main > /etc/apt/sources.list.d/docker.list
-RUN apt-get update
-RUN apt-get install -qq -y lxc-docker-1.4.1
-
 # Empty ssh key file, so dokku does not complain on installation
 RUN mkdir /root/.ssh
 RUN chown 600 /root/.ssh
@@ -20,7 +15,7 @@ RUN touch /root/.ssh/id_rsa.pub
 
 RUN apt-get install -y git make software-properties-common
 RUN git clone --branch $DOKKU_VERSION https://github.com/progrium/dokku.git /root/dokku
-RUN cd /root/dokku && CI=1 make install
+RUN cd /root/dokku && make install CI=1 DOCKER_VERSION=1.4.1
 
 RUN mkdir /var/run/sshd
 

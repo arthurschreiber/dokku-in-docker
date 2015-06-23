@@ -21,7 +21,7 @@ if [ ! -f ${DOKKU_HOME}/.profile ]; then
 fi
 
 chown -R dokku:dokku ${DOKKU_HOME}
-chown docker:docker /var/run/docker.sock
+chown root:docker /var/run/docker.sock
 
 echo "${VHOST}" > ${DOKKU_HOME}/HOSTNAME
 echo "${VHOST}" > ${DOKKU_HOME}/VHOST

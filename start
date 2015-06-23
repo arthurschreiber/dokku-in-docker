@@ -1,0 +1,32 @@
+#!/bin/bash
+set -e
+
+DOKKU_HOME="/home/dokku"
+VHOST=$(hostname)
+
+mkdir -p -m 0700 ${DOKKU_HOME}
+
+if [ ! -f ${DOKKU_HOME}/.bash_logout ]; then
+  cp /etc/skel/.bash_logout ${DOKKU_HOME}/.bash_logout
+fi
+
+if [ ! -f ${DOKKU_HOME}/.bashrc ]; then
+  cp /etc/skel/.bashrc ${DOKKU_HOME}/.bashrc
+fi
+
+if [ ! -f ${DOKKU_HOME}/.profile ]; then
+  cp /etc/skel/.profile ${DOKKU_HOME}/.profile
+fi
+
+chown -R dokku:dokku ${DOKKU_HOME}
+chown root:docker /var/run/docker.sock
+
+echo "${VHOST}" > ${DOKKU_HOME}/HOSTNAME
+echo "${VHOST}" > ${DOKKU_HOME}/VHOST
+echo "${DOKKU_VERSION}" > ${DOKKU_HOME}/VERSION
+
+echo "Starting sshd...";
+/usr/sbin/sshd
+
+echo "Starting nginx...";
+nginx -g 'daemon off;'

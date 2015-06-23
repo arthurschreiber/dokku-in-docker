@@ -4,7 +4,9 @@ set -e
 DOKKU_HOME="/home/dokku"
 VHOST=$(hostname)
 
-mkdir -p -m 0700 ${DOKKU_HOME}
+if [ ! -f ${DOKKU_HOME}/.sshcommand ]; then
+  sshcommand create dokku /usr/local/bin/dokku
+fi
 
 if [ ! -f ${DOKKU_HOME}/.bash_logout ]; then
   cp /etc/skel/.bash_logout ${DOKKU_HOME}/.bash_logout
@@ -19,7 +21,7 @@ if [ ! -f ${DOKKU_HOME}/.profile ]; then
 fi
 
 chown -R dokku:dokku ${DOKKU_HOME}
-chown root:docker /var/run/docker.sock
+chown docker:docker /var/run/docker.sock
 
 echo "${VHOST}" > ${DOKKU_HOME}/HOSTNAME
 echo "${VHOST}" > ${DOKKU_HOME}/VHOST

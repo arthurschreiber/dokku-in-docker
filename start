@@ -27,6 +27,8 @@ echo "${VHOST}" > ${DOKKU_HOME}/HOSTNAME
 echo "${VHOST}" > ${DOKKU_HOME}/VHOST
 echo "${DOKKU_VERSION}" > ${DOKKU_HOME}/VERSION
 
+dokku plugins-install
+
 echo "Starting sshd...";
 /usr/sbin/sshd
 

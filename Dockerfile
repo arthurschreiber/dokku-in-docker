@@ -23,7 +23,7 @@ RUN apt-get install -qq -y lxc-docker-1.4.1
 
 RUN cd /root/dokku && make install CI=1
 
-RUN git clone --branch v1.0.1 --depth 1 https://github.com/sekjun9878/dokku-redis-plugin /var/lib/dokku/plugins/redis
+RUN git clone --depth 1 https://github.com/arthurschreiber/dokku-redis-plugin.git /var/lib/dokku/plugins/redis
 
 RUN mkdir /var/run/sshd
 

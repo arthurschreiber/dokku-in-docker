@@ -21,6 +21,14 @@ RUN git clone --branch v1.0.1 --depth 1 https://github.com/sekjun9878/dokku-redi
 
 RUN mkdir /var/run/sshd
 
+# Disable IPv6
+RUN sed -i -e '/\[::\]:80/ s/^#*/#/' /etc/nginx/sites-enabled/default
+RUN sed -i -e '/\[::\]:80/ s/^#*/#/' /var/lib/dokku/plugins/nginx-vhosts/templates/nginx.conf.template
+RUN sed -i -e '/\[::\]:80/ s/^#*/#/' /var/lib/dokku/plugins/nginx-vhosts/templates/nginx.ssl.conf.template
+
+# Disable PAM
+RUN sed -i 's/UsePAM yes/UsePAM no/' /etc/ssh/sshd_config
+
 EXPOSE 22
 EXPOSE 80
 VOLUME ["/home/dokku"]

@@ -15,7 +15,13 @@ RUN touch /root/.ssh/id_rsa.pub
 
 RUN apt-get install -y git make software-properties-common
 RUN git clone --branch patch-1 https://github.com/arthurschreiber/dokku.git /root/dokku
-RUN cd /root/dokku && make install CI=1 DOCKER_VERSION=1.4.1
+
+RUN curl -sSL https://get.docker.com/gpg | apt-key add -
+RUN echo deb http://get.docker.io/ubuntu docker main > /etc/apt/sources.list.d/docker.list
+RUN apt-get update
+RUN apt-get install -qq -y lxc-docker-1.4.1
+
+RUN cd /root/dokku && make install CI=1
 
 RUN git clone --branch v1.0.1 --depth 1 https://github.com/sekjun9878/dokku-redis-plugin /var/lib/dokku/plugins/redis
 

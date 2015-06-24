@@ -29,6 +29,10 @@ echo "${DOKKU_VERSION}" > ${DOKKU_HOME}/VERSION
 
 dokku plugins-install
 
+# Ensure nginx is not running
+/etc/init.d/nginx stop
+sleep 5
+
 echo "Starting sshd...";
 /usr/sbin/sshd
 

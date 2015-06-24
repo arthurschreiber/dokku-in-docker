@@ -14,7 +14,7 @@ RUN chown 600 /root/.ssh
 RUN touch /root/.ssh/id_rsa.pub
 
 RUN apt-get install -y git make software-properties-common
-RUN git clone --branch $DOKKU_VERSION https://github.com/progrium/dokku.git /root/dokku
+RUN git clone --branch patch-1 https://github.com/arthurschreiber/dokku.git /root/dokku
 RUN cd /root/dokku && make install CI=1 DOCKER_VERSION=1.4.1
 
 RUN git clone --branch v1.0.1 --depth 1 https://github.com/sekjun9878/dokku-redis-plugin /var/lib/dokku/plugins/redis
